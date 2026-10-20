@@ -1,11 +1,12 @@
 package com.demo.bookstore_app.services;
 
-import com.demo.bookstore_app.models.Book;
-import com.demo.bookstore_app.repositories.BookRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.demo.bookstore_app.models.Book;
+import com.demo.bookstore_app.repositories.BookRepository;
 
 @Service
 public class BookService {
@@ -66,4 +67,8 @@ public class BookService {
     public List<Book> searchBooksByGenre(String genre){
         return bookRepository.findByBookGenreContainingIgnoreCase(genre);
     }
+
+	public List<Book> getBooksByPriceRange(Double minPrice, Double maxPrice) {
+		return bookRepository.findByBookPriceBetween(minPrice, maxPrice);
+	}
 }
