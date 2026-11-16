@@ -19,9 +19,8 @@ public class BookService {
     public Book getBookById(Long bookId) throws Exception {
         if (bookId == null || bookId < 0)
             throw new Exception("Invalid ID!");
-        Book result = bookRepository.getById(bookId);
-        if (result == null) throw new Exception("Cannot find book with this ID!");
-        return result;
+        return bookRepository.findById(bookId)
+                .orElseThrow(() -> new Exception("Cannot find book with this ID!"));
     }
 
     public List<Book> getAllBooks() throws Exception {

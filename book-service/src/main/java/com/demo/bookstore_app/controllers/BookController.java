@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api/books")
 public class BookController {
 
 	@Autowired
@@ -76,13 +76,13 @@ public class BookController {
 
 		try {
 			if (title != null) {
-				books = bookService.searchBooksByTitle(title);
+			    books = bookService.searchBooksByTitle(title);
 			} else if (author != null) {
-				books = bookService.searchBooksByGenre(genre);
+			    books = bookService.searchBooksByAuthor(author);
 			} else if (genre != null) {
-				books = bookService.searchBooksByAuthor(author);
+			    books = bookService.searchBooksByGenre(genre);
 			} else {
-				books = bookService.getAllBooks();
+			    books = bookService.getAllBooks();
 			}
 			return ResponseEntity.ok(books);
 		} catch (Exception ex) {
