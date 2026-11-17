@@ -1,4 +1,4 @@
-package com.demo.order;
+package com.demo.order.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

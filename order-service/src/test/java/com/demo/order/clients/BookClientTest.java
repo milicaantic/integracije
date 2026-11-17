@@ -1,4 +1,4 @@
-package com.demo.order;
+package com.demo.order.clients;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -6,6 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.demo.order.clients.BookClient;
+import com.demo.order.dto.BookDto;
+import com.demo.order.exceptions.BookNotFoundException;
 
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;

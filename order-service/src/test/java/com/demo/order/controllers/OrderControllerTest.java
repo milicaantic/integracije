@@ -1,4 +1,4 @@
-package com.demo.order.controller;
+package com.demo.order.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -10,11 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import com.demo.order.BookNotFoundException;
-import com.demo.order.CreateOrderRequest;
-import com.demo.order.OrderResponse;
-import com.demo.order.OrderService;
 import com.demo.order.controllers.OrderController;
+import com.demo.order.dto.CreateOrderRequest;
+import com.demo.order.dto.OrderResponse;
+import com.demo.order.exceptions.BookNotFoundException;
+import com.demo.order.services.OrderService;
 
 import reactor.core.publisher.Mono;
 

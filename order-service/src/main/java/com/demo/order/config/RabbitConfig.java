@@ -1,4 +1,4 @@
-package com.demo.order;
+package com.demo.order.config;
 
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

@@ -1,4 +1,4 @@
-package com.demo.order;
+package com.demo.order.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
