@@ -1,5 +1,5 @@
 package com.demo.order.controllers;
-
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -19,6 +19,7 @@ import com.demo.order.services.OrderService;
 import reactor.core.publisher.Mono;
 
 @WebFluxTest(OrderController.class)
+@AutoConfigureWebTestClient(timeout = "30s")
 class OrderControllerTest {
 
     @Autowired
