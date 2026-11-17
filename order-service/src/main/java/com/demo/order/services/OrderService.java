@@ -1,4 +1,4 @@
-package com.demo.order;
+package com.demo.order.services;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -6,6 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+
+import com.demo.order.clients.BookClient;
+import com.demo.order.config.RabbitConfig;
+import com.demo.order.dto.CreateOrderRequest;
+import com.demo.order.dto.OrderResponse;
+import com.demo.order.events.OrderPlaced;
 
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;

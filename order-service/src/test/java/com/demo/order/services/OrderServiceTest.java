@@ -1,4 +1,4 @@
-package com.demo.order.service;
+package com.demo.order.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -14,13 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
-import com.demo.order.BookClient;
-import com.demo.order.BookDto;
-import com.demo.order.BookNotFoundException;
-import com.demo.order.CreateOrderRequest;
-import com.demo.order.OrderPlaced;
-import com.demo.order.OrderService;
-import com.demo.order.RabbitConfig;
+import com.demo.order.clients.BookClient;
+import com.demo.order.config.RabbitConfig;
+import com.demo.order.dto.BookDto;
+import com.demo.order.dto.CreateOrderRequest;
+import com.demo.order.events.OrderPlaced;
+import com.demo.order.exceptions.BookNotFoundException;
+import com.demo.order.services.OrderService;
 
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;

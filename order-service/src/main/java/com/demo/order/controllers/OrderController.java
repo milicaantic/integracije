@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.order.CreateOrderRequest;
-import com.demo.order.OrderResponse;
-import com.demo.order.OrderService;
+import com.demo.order.dto.CreateOrderRequest;
+import com.demo.order.dto.OrderResponse;
+import com.demo.order.services.OrderService;
 
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
