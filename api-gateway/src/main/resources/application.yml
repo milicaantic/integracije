@@ -20,6 +20,10 @@ spring:
               uri: ${ORDER_SERVICE_URL:http://localhost:8083}
               predicates:
                 - Path=/api/orders/**
+            - id: notification-service
+              uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+              predicates:
+                - Path=/api/notifications/**
 server:
   port: 8080
 management:

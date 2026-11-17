@@ -1,4 +1,4 @@
-package com.demo.notification;
+package com.demo.notification.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
