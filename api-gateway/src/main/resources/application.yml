@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: book-service
+              uri: ${BOOK_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/books/**
+            - id: author-service
+              uri: ${AUTHOR_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/authors/**
+            - id: order-service
+              uri: ${ORDER_SERVICE_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/orders/**
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: never
+  metrics:
+    tags:
+      application: ${spring.application.name}
