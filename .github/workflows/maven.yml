@@ -54,3 +54,96 @@ jobs:
             ${{ matrix.service }}/target/surefire-reports/
             ${{ matrix.service }}/target/site/jacoco/
           if-no-files-found: ignore
+
+  e2e:
+    name: End-to-end tests
+    needs: build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: integracije
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+      rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+          - 5672:5672
+        options: >-
+          --health-cmd "rabbitmq-diagnostics -q ping"
+          --health-interval 10s
+          --health-timeout 10s
+          --health-retries 10
+      zipkin:
+        image: openzipkin/zipkin
+        ports:
+          - 9411:9411
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+          cache-dependency-path: e2e-tests/pom.xml
+
+      - name: Download service JARs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: "*-jar"
+          path: jars
+          merge-multiple: true
+
+      - name: Start services
+        run: |
+          ls -l jars
+          for s in book-service author-service order-service notification-service api-gateway; do
+            nohup java -jar jars/$s-0.0.1-SNAPSHOT.jar > $s.log 2>&1 &
+          done
+
+      - name: Wait until all services are healthy
+        run: |
+          for port in 8081 8082 8083 8084 8080; do
+            echo "Waiting for port $port..."
+            for i in $(seq 1 60); do
+              if curl -sf http://localhost:$port/actuator/health > /dev/null; then
+                echo "Port $port is UP"
+                break
+              fi
+              sleep 2
+            done
+            curl -sf http://localhost:$port/actuator/health || { echo "Service on port $port did not start"; exit 1; }
+          done
+
+      - name: Run end-to-end tests
+        working-directory: e2e-tests
+        run: ./mvnw --batch-mode --no-transfer-progress clean verify
+
+      - name: Show service logs
+        if: always()
+        run: |
+          for f in *.log; do
+            echo "===== $f ====="
+            tail -n 80 "$f"
+          done
+
+      - name: Upload end-to-end test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-reports
+          path: e2e-tests/target/surefire-reports/
+          if-no-files-found: ignore
